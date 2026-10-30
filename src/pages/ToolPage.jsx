@@ -1,0 +1,7 @@
+import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import { ArrowRight, ChevronRight } from 'lucide-react'
+import { tools, iconMap } from '../data/tools'
+import ToolView from '../tools/ToolView'
+import NotFound from './NotFound'
+export default function ToolPage(){const {toolId}=useParams();const tool=tools.find(t=>t.id===toolId);useEffect(()=>{if(tool){document.title=`${tool.name} | Nexora`;const meta=document.querySelector('meta[name=description]');if(meta)meta.content=tool.description+' Use this free tool in Nexora.'}return()=>{document.title='Nexora | Your everyday digital toolkit';const meta=document.querySelector('meta[name=description]');if(meta)meta.content='Nexora brings useful everyday calculators, converters, and productivity tools together in one thoughtful workspace.'}},[tool]);if(!tool)return <NotFound/>;const I=iconMap[tool.icon];return <div className="tool-page"><div className="breadcrumbs"><Link to="/">Workspace</Link><ChevronRight size={14}/><span>{tool.category}</span><ChevronRight size={14}/><span>{tool.name}</span></div><div className="tool-heading"><div className="tool-title-icon"><I size={24}/></div><div><span className="eyebrow">{tool.category.toUpperCase()}</span><h1>{tool.name}</h1><p>{tool.description}</p></div></div><ToolView tool={tool}/><div className="tool-footnote"><span className="check-dot">✓</span> Your work stays in this browser <span>·</span><Link to="/">Back to all tools <ArrowRight size={14}/></Link></div></div>}
